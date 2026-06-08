@@ -1,0 +1,11 @@
+property {
+    define {
+        mode_is_zero = (t._mode == 0);
+        count_nonnegative = (t.count >= 0);
+    }
+
+    Assertion {
+        P1: mode_is_zero;
+        P2: count_nonnegative;
+    }
+}

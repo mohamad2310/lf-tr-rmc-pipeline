@@ -1,0 +1,70 @@
+reactiveclass Environment(10) {
+    knownrebecs {
+        Thermostat t;
+    }
+    statevars {
+        int _heatOn;
+        int _temperature;
+    }
+
+    Environment() {
+        _heatOn = 0;
+        _temperature = 19;
+        self.tick() after(1);
+    }
+
+    msgsrv tick() {
+        if (_heatOn == 0) {
+            _temperature = _temperature - 1;
+        } else {
+            _temperature = _temperature + 1;
+        }
+
+        t.temperature(_temperature) after(0);
+        self.tick() after(1000);
+    }
+
+    msgsrv heatOn(int value) {
+        _heatOn = value;
+    }
+}
+
+reactiveclass Thermostat(10) {
+    knownrebecs {
+        Environment e;
+    }
+    statevars {
+        int _mode;
+    }
+
+    Thermostat() {
+        _mode = 0;
+    }
+
+    msgsrv temperature(int value) {
+        if (_mode == 0) {
+            if (value <= 18) {
+                e.heatOn(1) after(0);
+                self.changeMode() after(0);
+            }
+        }
+        else if (_mode == 1) {
+            if (value >= 22) {
+                e.heatOn(0) after(0);
+                self.changeMode() after(0);
+            }
+        }
+    }
+
+    msgsrv changeMode() {
+        if (_mode == 0)
+            _mode = 1;
+        else
+            _mode = 0;
+    }
+}
+
+main {
+    Environment e(t):();
+    Thermostat t(e):();
+}

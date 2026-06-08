@@ -1,0 +1,39 @@
+property {
+    define {
+        source_received_closed_ring_values = ((s.received == 0) | (s.received == 5));
+
+        source_in_present_boolean = ((s.in_present == true) | (s.in_present == false));
+        source_react_pending_boolean = ((s.react_pending == true) | (s.react_pending == false));
+
+        n1_in_present_boolean = ((n1.in_present == true) | (n1.in_present == false));
+        n1_react_pending_boolean = ((n1.react_pending == true) | (n1.react_pending == false));
+
+        n2_in_present_boolean = ((n2.in_present == true) | (n2.in_present == false));
+        n2_react_pending_boolean = ((n2.react_pending == true) | (n2.react_pending == false));
+
+        n3_in_present_boolean = ((n3.in_present == true) | (n3.in_present == false));
+        n3_react_pending_boolean = ((n3.react_pending == true) | (n3.react_pending == false));
+
+        n4_in_present_boolean = ((n4.in_present == true) | (n4.in_present == false));
+        n4_react_pending_boolean = ((n4.react_pending == true) | (n4.react_pending == false));
+
+        n5_in_present_boolean = ((n5.in_present == true) | (n5.in_present == false));
+        n5_react_pending_boolean = ((n5.react_pending == true) | (n5.react_pending == false));
+    }
+
+    Assertion {
+        P1: source_received_closed_ring_values;
+        P2: source_in_present_boolean;
+        P3: source_react_pending_boolean;
+        P4: n1_in_present_boolean;
+        P5: n1_react_pending_boolean;
+        P6: n2_in_present_boolean;
+        P7: n2_react_pending_boolean;
+        P8: n3_in_present_boolean;
+        P9: n3_react_pending_boolean;
+        P10: n4_in_present_boolean;
+        P11: n4_react_pending_boolean;
+        P12: n5_in_present_boolean;
+        P13: n5_react_pending_boolean;
+    }
+}

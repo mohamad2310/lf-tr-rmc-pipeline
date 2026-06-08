@@ -1,0 +1,93 @@
+reactiveclass Controller(5) {
+    knownrebecs {
+        Train t;
+        Door d;
+    }
+    statevars {
+    }
+
+    Controller() {
+        self.startup_event() after(0);
+    }
+
+    msgsrv startup_event() {
+        t.input_in(1) after(1);
+        d.input_in(2) after(1);
+    }
+}
+
+reactiveclass Train(5) {
+    knownrebecs {
+    }
+    statevars {
+        int received;
+        int in_value;
+        boolean in_present;
+        boolean react_pending;
+    }
+
+    Train() {
+        received = 0;
+        in_value = 0;
+        in_present = false;
+        react_pending = false;
+    }
+
+    msgsrv input_in(int v) {
+        in_value = v;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            received = in_value;
+            in_present = false;
+        }
+    }
+}
+
+reactiveclass Door(5) {
+    knownrebecs {
+    }
+    statevars {
+        int received;
+        int in_value;
+        boolean in_present;
+        boolean react_pending;
+    }
+
+    Door() {
+        received = 0;
+        in_value = 0;
+        in_present = false;
+        react_pending = false;
+    }
+
+    msgsrv input_in(int v) {
+        in_value = v;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            received = in_value;
+            in_present = false;
+        }
+    }
+}
+
+main {
+    Train t():();
+    Door d():();
+    Controller c(t, d):();
+}

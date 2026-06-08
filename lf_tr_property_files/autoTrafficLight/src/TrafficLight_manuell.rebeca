@@ -1,0 +1,164 @@
+reactiveclass TrafficLight(10) {
+    knownrebecs {
+    }
+    statevars {
+        int count;
+        int _mode;
+
+        int pedestrian_value;
+        boolean pedestrian_present;
+        boolean react_pending;
+
+        int sigR_value;
+        boolean sigR_present;
+        int sigG_value;
+        boolean sigG_present;
+        int sigY_value;
+        boolean sigY_present;
+
+        boolean timer_started;
+        int ticks;
+        int maxTicks;
+    }
+
+    TrafficLight() {
+        count = 0;
+        _mode = 0;
+
+        pedestrian_value = 0;
+        pedestrian_present = false;
+        react_pending = false;
+
+        sigR_value = 0;
+        sigR_present = false;
+        sigG_value = 0;
+        sigG_present = false;
+        sigY_value = 0;
+        sigY_present = false;
+
+        timer_started = false;
+        ticks = 0;
+        maxTicks = 5;
+
+        self.startup() after(0);
+        self.tick() after(0);
+    }
+
+    msgsrv startup() {
+        _mode = 0;
+        count = 58;
+    }
+
+    msgsrv receive_pedestrian(int v) {
+        pedestrian_value = v;
+        pedestrian_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.input_reaction() after(0);
+        }
+    }
+
+    msgsrv input_reaction() {
+        react_pending = false;
+    }
+
+    msgsrv tick() {
+        if (ticks < maxTicks) {
+            ticks = ticks + 1;
+            sigR_present = false;
+            sigG_present = false;
+            sigY_present = false;
+
+            if (_mode == 0) {
+                if (count >= 60) {
+                    sigG_value = 1;
+                    sigG_present = true;
+                    self.resetCount() after(0);
+                } else {
+                    count = count + 1;
+                }
+            }
+            else if (_mode == 1) {
+                if (pedestrian_present) {
+                    if (count >= 60) {
+                        sigY_value = 1;
+                        sigY_present = true;
+                        self.resetCount() after(0);
+                    } else {
+                        count = count + 1;
+                    }
+                } else {
+                    count = count + 1;
+                }
+            }
+            else if (_mode == 2) {
+                if (count >= 5) {
+                    sigR_value = 1;
+                    sigR_present = true;
+                    self.resetCount() after(0);
+                } else {
+                    count = count + 1;
+                }
+            }
+            else {
+                if (count >= 60) {
+                    sigY_value = 1;
+                    sigY_present = true;
+                    self.resetCount() after(0);
+                } else {
+                    count = count + 1;
+                }
+            }
+
+            pedestrian_present = false;
+
+            if (!timer_started) {
+                timer_started = true;
+                self.tick() after(1);
+            } else {
+                self.tick() after(1);
+            }
+        }
+    }
+
+    msgsrv resetCount() {
+        count = 0;
+    }
+}
+
+reactiveclass Pedestrian(5) {
+    knownrebecs {
+        TrafficLight t;
+    }
+    statevars {
+        int out_value;
+        boolean out_present;
+        int ticks;
+        int maxTicks;
+    }
+
+    Pedestrian() {
+        out_value = 0;
+        out_present = false;
+        ticks = 0;
+        maxTicks = 5;
+
+        self.tick() after(1);
+    }
+
+    msgsrv tick() {
+        if (ticks < maxTicks) {
+            ticks = ticks + 1;
+            out_value = 1;
+            out_present = true;
+            t.receive_pedestrian(1) after(0);
+            out_present = false;
+            self.tick() after(10);
+        }
+    }
+}
+
+main {
+    TrafficLight t():();
+    Pedestrian p(t):();
+}

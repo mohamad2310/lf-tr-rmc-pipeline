@@ -1,0 +1,102 @@
+reactiveclass Controller(5) {
+    knownrebecs {
+        Vision vision;
+    }
+    statevars {
+    }
+
+    Controller() {
+        self.startup_reaction() after(0);
+    }
+
+    msgsrv startup_reaction() {
+        vision.receive_in(1) after(0);
+    }
+}
+
+reactiveclass Vision(5) {
+    knownrebecs {
+        Door door;
+    }
+    statevars {
+        int in_value;
+        boolean in_present;
+        boolean react_pending;
+        int ramp;
+    }
+
+    Vision() {
+        in_value = 0;
+        in_present = false;
+        react_pending = false;
+        ramp = 0;
+    }
+
+    msgsrv receive_in(int v) {
+        in_value = v;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            if (ramp == 1) {
+                door.receive_in(0) after(0);
+            } else {
+                door.receive_in(1) after(0);
+            }
+            in_present = false;
+        }
+    }
+}
+
+reactiveclass Door(5) {
+    knownrebecs {
+    }
+    statevars {
+        int in_value;
+        boolean in_present;
+        boolean react_pending;
+        int doorOpen;
+    }
+
+    Door() {
+        in_value = 0;
+        in_present = false;
+        react_pending = false;
+        doorOpen = 0;
+    }
+
+    msgsrv receive_in(int v) {
+        in_value = v;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            if (in_value == 1) {
+                doorOpen = 1;
+            } else {
+                if (in_value == 0) {
+                    doorOpen = 0;
+                }
+            }
+            in_present = false;
+        }
+    }
+}
+
+main {
+    Controller controller(vision):();
+    Vision vision(door):();
+    Door door():();
+}

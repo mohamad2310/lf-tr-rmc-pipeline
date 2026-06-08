@@ -1,0 +1,321 @@
+reactiveclass TrainW(20) {
+    knownrebecs {
+        Controller controller;
+    }
+    statevars {
+        int _out;
+        int _mode;
+
+        int signal_value;
+        boolean signal_present;
+        boolean outUpdated_present;
+        boolean react_pending;
+    }
+
+    TrainW() {
+        _out = 0;
+        _mode = 0;
+
+        signal_value = 0;
+        signal_present = false;
+        outUpdated_present = false;
+        react_pending = false;
+
+        self.startup() after(0);
+        self.t() after(1);
+    }
+
+    msgsrv startup() {
+        _mode = 0;
+    }
+
+    msgsrv t() {
+        if (_mode == 0) {
+            _out = 0;
+            controller.out_w(0) after(0);
+            self.outUpdated() after(0);
+        }
+        else if (_mode == 2) {
+            _out = 1;
+            controller.out_w(1) after(0);
+            self.outUpdated() after(0);
+        }
+
+        self.t() after(1);
+    }
+
+    msgsrv signal(int v) {
+        signal_value = v;
+        signal_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_signal_or_outUpdated() after(0);
+        }
+    }
+
+    msgsrv outUpdated() {
+        outUpdated_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_signal_or_outUpdated() after(0);
+        }
+    }
+
+    msgsrv react_signal_or_outUpdated() {
+        boolean had_signal;
+        boolean had_outUpdated;
+        int sig;
+
+        react_pending = false;
+        had_signal = signal_present;
+        had_outUpdated = outUpdated_present;
+        sig = signal_value;
+
+        if (_mode == 0) {
+            if (had_outUpdated && _out == 0) {
+                self.toModeWait() after(0);
+            }
+        }
+        else if (_mode == 1) {
+            if (had_signal && sig == 0) {
+                self.toModeBridge() after(0);
+            }
+        }
+        else {
+            if (had_outUpdated && _out == 1) {
+                self.toModeAway() after(0);
+            }
+        }
+
+        signal_present = false;
+        outUpdated_present = false;
+    }
+
+    msgsrv toModeAway() {
+        _mode = 0;
+    }
+
+    msgsrv toModeWait() {
+        _mode = 1;
+    }
+
+    msgsrv toModeBridge() {
+        _mode = 2;
+    }
+}
+
+reactiveclass TrainE(20) {
+    knownrebecs {
+        Controller controller;
+    }
+    statevars {
+        int _out;
+        int _mode;
+
+        int signal_value;
+        boolean signal_present;
+        boolean outUpdated_present;
+        boolean react_pending;
+    }
+
+    TrainE() {
+        _out = 0;
+        _mode = 0;
+
+        signal_value = 0;
+        signal_present = false;
+        outUpdated_present = false;
+        react_pending = false;
+
+        self.startup() after(0);
+        self.t() after(1);
+    }
+
+    msgsrv startup() {
+        _mode = 0;
+    }
+
+    msgsrv t() {
+        if (_mode == 0) {
+            _out = 0;
+            controller.out_e(0) after(0);
+            self.outUpdated() after(0);
+        }
+        else if (_mode == 2) {
+            _out = 1;
+            controller.out_e(1) after(0);
+            self.outUpdated() after(0);
+        }
+
+        self.t() after(1);
+    }
+
+    msgsrv signal(int v) {
+        signal_value = v;
+        signal_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_signal_or_outUpdated() after(0);
+        }
+    }
+
+    msgsrv outUpdated() {
+        outUpdated_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_signal_or_outUpdated() after(0);
+        }
+    }
+
+    msgsrv react_signal_or_outUpdated() {
+        boolean had_signal;
+        boolean had_outUpdated;
+        int sig;
+
+        react_pending = false;
+        had_signal = signal_present;
+        had_outUpdated = outUpdated_present;
+        sig = signal_value;
+
+        if (_mode == 0) {
+            if (had_outUpdated && _out == 0) {
+                self.toModeWait() after(0);
+            }
+        }
+        else if (_mode == 1) {
+            if (had_signal && sig == 0) {
+                self.toModeBridge() after(0);
+            }
+        }
+        else {
+            if (had_outUpdated && _out == 1) {
+                self.toModeAway() after(0);
+            }
+        }
+
+        signal_present = false;
+        outUpdated_present = false;
+    }
+
+    msgsrv toModeAway() {
+        _mode = 0;
+    }
+
+    msgsrv toModeWait() {
+        _mode = 1;
+    }
+
+    msgsrv toModeBridge() {
+        _mode = 2;
+    }
+}
+
+reactiveclass Controller(30) {
+    knownrebecs {
+        TrainW train_w;
+        TrainE train_e;
+    }
+    statevars {
+        int west;
+        int east;
+        int near_w;
+        int near_e;
+
+        int out_w_value;
+        int out_e_value;
+        boolean out_w_present;
+        boolean out_e_present;
+        boolean react_pending;
+    }
+
+    Controller() {
+        west = 1;
+        east = 1;
+        near_w = 0;
+        near_e = 0;
+
+        out_w_value = 0;
+        out_e_value = 0;
+        out_w_present = false;
+        out_e_present = false;
+        react_pending = false;
+
+        self.startup() after(0);
+    }
+
+    msgsrv startup() {
+        west = 1;
+        east = 1;
+        near_w = 0;
+        near_e = 0;
+    }
+
+    msgsrv out_w(int v) {
+        out_w_value = v;
+        out_w_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_outs() after(0);
+        }
+    }
+
+    msgsrv out_e(int v) {
+        out_e_value = v;
+        out_e_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_outs() after(0);
+        }
+    }
+
+    msgsrv react_outs() {
+        react_pending = false;
+
+        if (out_e_present && out_e_value == 0) {
+            near_e = 1;
+        }
+        if (out_e_present && out_e_value == 1) {
+            near_e = 0;
+        }
+        if (out_w_present && out_w_value == 0) {
+            near_w = 1;
+        }
+        if (out_w_present && out_w_value == 1) {
+            near_w = 0;
+        }
+
+        if (near_e != 1) {
+            east = 1;
+        }
+        else if (west == 1) {
+            east = 0;
+        }
+
+        if (near_w != 1) {
+            west = 1;
+        }
+        else if (east == 1) {
+            west = 0;
+        }
+
+        out_w_present = false;
+        out_e_present = false;
+
+        self.westUpdated() after(0);
+        self.eastUpdated() after(0);
+    }
+
+    msgsrv westUpdated() {
+        train_w.signal(west) after(0);
+    }
+
+    msgsrv eastUpdated() {
+        train_e.signal(east) after(0);
+    }
+}
+
+main {
+    TrainW train_w(controller):();
+    TrainE train_e(controller):();
+    Controller controller(train_w, train_e):();
+}

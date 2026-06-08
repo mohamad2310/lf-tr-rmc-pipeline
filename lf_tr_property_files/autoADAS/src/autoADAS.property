@@ -1,0 +1,21 @@
+property {
+    define {
+        brakesApplied_binary = ((b.brakesApplied == 0) | (b.brakesApplied == 1));
+
+        camera_frame_domain = ((c.frame == 0) | (c.frame == 1));
+
+        lidar_frame_domain = ((l.frame == 0) | (l.frame == 2));
+
+        requestStop_binary = ((p.requestStop == 0) | (p.requestStop == 1));
+
+        dashboard_received_binary = ((d.received == 0) | (d.received == 1));
+    }
+
+    Assertion {
+        Safety1: brakesApplied_binary;
+        Safety2: camera_frame_domain;
+        Safety3: lidar_frame_domain;
+        Safety4: requestStop_binary;
+        Safety5: dashboard_received_binary;
+    }
+}

@@ -1,0 +1,61 @@
+reactiveclass Task(10) {
+    knownrebecs {
+    }
+    statevars {
+        int messageSent;
+        int counter;
+        int panic;
+
+        int in_value;
+        boolean in_present;
+
+        boolean react_pending;
+    }
+
+    Task() {
+        messageSent = 0;
+        counter = 0;
+        panic = 0;
+
+        in_value = 0;
+        in_present = false;
+
+        react_pending = false;
+
+        self.timer_t() after(0);
+    }
+
+    msgsrv timer_t() {
+        self.receive_in(messageSent) after(0);
+        self.timer_t() after(1);
+    }
+
+    msgsrv receive_in(int v) {
+        in_value = v;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.process_in() after(0);
+        }
+    }
+
+    msgsrv process_in() {
+        react_pending = false;
+        if (in_present) {
+            if (in_value != messageSent) {
+                panic = 1;
+            }
+            counter = counter + 1;
+            in_present = false;
+            self.do_updateMessage() after(0);
+        }
+    }
+
+    msgsrv do_updateMessage() {
+        messageSent = messageSent + 1;
+    }
+}
+
+main {
+    Task task():();
+}

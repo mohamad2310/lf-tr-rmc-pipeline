@@ -1,0 +1,31 @@
+{
+  "project_name": "autoPingPong",
+  "final_status": "satisfied_with_deadlock",
+  "iterations": [
+    {
+      "iteration": 1,
+      "candidate_property_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\runs\\iter_01\\autoPingPong.candidate_properties.json",
+      "candidate_property_raw": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\runs\\iter_01\\autoPingPong.candidate_properties.raw.txt",
+      "candidate_property_summary": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\runs\\iter_01\\autoPingPong.candidate_properties.summary.txt",
+      "rebeca_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\runs\\iter_01\\autoPingPong.rebeca",
+      "property_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\runs\\iter_01\\autoPingPong.property",
+      "live_rebeca_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\src\\autoPingPong.rebeca",
+      "live_property_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\src\\autoPingPong.property",
+      "tr_package_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\runs\\iter_01\\autoPingPong.tr_package.json",
+      "tr_package_raw": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\runs\\iter_01\\autoPingPong.tr_package.raw.txt",
+      "rmc_result_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\runs\\iter_01\\autoPingPong.rmc_result.json",
+      "translator_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\runs\\iter_01\\autoPingPong.rmc.translator.log.txt",
+      "compile_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\runs\\iter_01\\autoPingPong.rmc.compile.log.txt",
+      "execution_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\runs\\iter_01\\autoPingPong.rmc.execution.log.txt",
+      "output_xml_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\runs\\iter_01\\autoPingPong.output.xml.txt",
+      "statespace_xml_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\runs\\iter_01\\autoPingPong.statespace.xml.txt",
+      "progress_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\runs\\iter_01\\autoPingPong.progress.txt",
+      "analysis_variant_dir": null,
+      "pipeline_note": "Pipeline policy accepted the raw RMC deadlock result as a terminal successful outcome. The raw RMC status remains `deadlock`.",
+      "repair_case": "accepted_deadlock",
+      "repair_prompt_path": null
+    }
+  ],
+  "final_iteration": 1,
+  "run_root": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoPingPong\\runs"
+}

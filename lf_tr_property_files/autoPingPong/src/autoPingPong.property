@@ -1,0 +1,13 @@
+property {
+    define {
+        pong_count_nonnegative = (pong.count >= 0);
+        pong_expected_is_ten = (pong.expected == 10);
+        ping_pingsLeft_not_above_init = (ping.pingsLeft <= 10);
+    }
+
+    Assertion {
+        P1: pong_count_nonnegative;
+        P2: pong_expected_is_ten;
+        P3: ping_pingsLeft_not_above_init;
+    }
+}

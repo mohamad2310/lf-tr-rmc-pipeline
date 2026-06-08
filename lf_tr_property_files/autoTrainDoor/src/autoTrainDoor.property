@@ -1,0 +1,15 @@
+property {
+    define {
+        train_in_present_is_boolean = ((t.in_present == true) | (t.in_present == false));
+        train_react_pending_is_boolean = ((t.react_pending == true) | (t.react_pending == false));
+        door_in_present_is_boolean = ((d.in_present == true) | (d.in_present == false));
+        door_react_pending_is_boolean = ((d.react_pending == true) | (d.react_pending == false));
+    }
+
+    Assertion {
+        P1: train_in_present_is_boolean;
+        P2: train_react_pending_is_boolean;
+        P3: door_in_present_is_boolean;
+        P4: door_react_pending_is_boolean;
+    }
+}

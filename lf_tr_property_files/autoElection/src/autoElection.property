@@ -1,0 +1,13 @@
+property {
+    define {
+        node0_id_is_zero = (node0.id == 0);
+        node1_id_is_one = (node1.id == 1);
+        node2_id_is_two = (node2.id == 2);
+    }
+
+    Assertion {
+        P1: node0_id_is_zero;
+        P2: node1_id_is_one;
+        P3: node2_id_is_two;
+    }
+}

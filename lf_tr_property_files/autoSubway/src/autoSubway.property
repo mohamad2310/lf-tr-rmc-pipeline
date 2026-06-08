@@ -1,0 +1,13 @@
+property {
+    define {
+        ums_pos_is_zero = (u.pos == 0);
+        ums_inuse_is_binary = ((u.inUse == 0) | (u.inUse == 1));
+        ums_inuse_implies_pos_zero = ((u.inUse != 1) | (u.pos == 0));
+    }
+
+    Assertion {
+        P1: ums_pos_is_zero;
+        P2: ums_inuse_is_binary;
+        P3: ums_inuse_implies_pos_zero;
+    }
+}

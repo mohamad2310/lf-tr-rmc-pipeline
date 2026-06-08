@@ -1,0 +1,94 @@
+reactiveclass _Factorial(5) {
+    knownrebecs {
+        Printer printer;
+    }
+    statevars {
+        int N;
+        int result;
+        int lastResult;
+        boolean t_pending;
+        int ticks;
+        int maxTicks;
+    }
+
+    _Factorial() {
+        N = 0;
+        result = 0;
+        lastResult = 0;
+        t_pending = false;
+        ticks = 0;
+        maxTicks = 5;
+        self.timer_t() after(0);
+    }
+
+    msgsrv timer_t() {
+        if (ticks < maxTicks) {
+            ticks = ticks + 1;
+
+            if (!t_pending) {
+                t_pending = true;
+                self.react_t() after(0);
+            }
+
+            self.timer_t() after(1);
+        }
+    }
+
+    msgsrv react_t() {
+        t_pending = false;
+
+        if (N < 2) {
+            result = 1;
+        } else {
+            result = N * lastResult;
+        }
+
+        printer.in(result) after(0);
+        self.prepForNext() after(0);
+    }
+
+    msgsrv prepForNext() {
+        N = N + 1;
+        lastResult = result;
+    }
+}
+
+reactiveclass Printer(5) {
+    knownrebecs {
+    }
+    statevars {
+        int result;
+        int in_value;
+        boolean in_present;
+        boolean react_pending;
+    }
+
+    Printer() {
+        result = 0;
+        in_value = 0;
+        in_present = false;
+        react_pending = false;
+    }
+
+    msgsrv in(int value) {
+        in_value = value;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            result = in_value;
+            in_present = false;
+        }
+    }
+}
+
+main {
+    Printer printer():();
+    _Factorial factorial(printer):();
+}

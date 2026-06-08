@@ -1,0 +1,52 @@
+{
+  "project_name": "autoProcessMsg",
+  "final_status": "state_explosion",
+  "iterations": [
+    {
+      "iteration": 1,
+      "candidate_property_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_01\\autoProcessMsg.candidate_properties.json",
+      "candidate_property_raw": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_01\\autoProcessMsg.candidate_properties.raw.txt",
+      "candidate_property_summary": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_01\\autoProcessMsg.candidate_properties.summary.txt",
+      "rebeca_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_01\\autoProcessMsg.rebeca",
+      "property_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_01\\autoProcessMsg.property",
+      "live_rebeca_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\src\\autoProcessMsg.rebeca",
+      "live_property_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\src\\autoProcessMsg.property",
+      "tr_package_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_01\\autoProcessMsg.tr_package.json",
+      "tr_package_raw": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_01\\autoProcessMsg.tr_package.raw.txt",
+      "rmc_result_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_01\\autoProcessMsg.rmc_result.json",
+      "translator_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_01\\autoProcessMsg.rmc.translator.log.txt",
+      "compile_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_01\\autoProcessMsg.rmc.compile.log.txt",
+      "execution_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_01\\autoProcessMsg.rmc.execution.log.txt",
+      "output_xml_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_01\\autoProcessMsg.output.xml.txt",
+      "statespace_xml_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_01\\autoProcessMsg.statespace.xml.txt",
+      "progress_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_01\\autoProcessMsg.progress.txt",
+      "pipeline_note": null,
+      "repair_case": "property_too_strong_or_model_property_mismatch",
+      "repair_prompt_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_01\\autoProcessMsg.repair_prompt.txt"
+    },
+    {
+      "iteration": 2,
+      "candidate_property_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_02\\autoProcessMsg.candidate_properties.json",
+      "candidate_property_raw": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_02\\autoProcessMsg.candidate_properties.raw.txt",
+      "candidate_property_summary": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_02\\autoProcessMsg.candidate_properties.summary.txt",
+      "rebeca_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_02\\autoProcessMsg.rebeca",
+      "property_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_02\\autoProcessMsg.property",
+      "live_rebeca_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\src\\autoProcessMsg.rebeca",
+      "live_property_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\src\\autoProcessMsg.property",
+      "tr_package_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_02\\autoProcessMsg.tr_package.json",
+      "tr_package_raw": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_02\\autoProcessMsg.tr_package.raw.txt",
+      "rmc_result_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_02\\autoProcessMsg.rmc_result.json",
+      "translator_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_02\\autoProcessMsg.rmc.translator.log.txt",
+      "compile_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_02\\autoProcessMsg.rmc.compile.log.txt",
+      "execution_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_02\\autoProcessMsg.rmc.execution.log.txt",
+      "output_xml_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_02\\autoProcessMsg.output.xml.txt",
+      "statespace_xml_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_02\\autoProcessMsg.statespace.xml.txt",
+      "progress_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_02\\autoProcessMsg.progress.txt",
+      "pipeline_note": null,
+      "repair_case": "state_explosion",
+      "repair_prompt_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs\\iter_02\\autoProcessMsg.repair_prompt.txt"
+    }
+  ],
+  "final_iteration": 2,
+  "run_root": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoProcessMsg\\runs"
+}

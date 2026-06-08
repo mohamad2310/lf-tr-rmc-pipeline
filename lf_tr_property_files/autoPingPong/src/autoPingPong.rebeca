@@ -1,0 +1,87 @@
+reactiveclass Ping(5) {
+    knownrebecs {
+        Pong pong;
+    }
+    statevars {
+        int pingsLeft;
+        int receive_value;
+        boolean receive_present;
+        boolean react_pending;
+    }
+
+    Ping() {
+        pingsLeft = 10;
+        receive_value = 0;
+        receive_present = false;
+        react_pending = false;
+        self.serve() after(1);
+    }
+
+    msgsrv serve() {
+        pong.receive(pingsLeft) after(0);
+        pingsLeft = pingsLeft - 1;
+    }
+
+    msgsrv receive(int value) {
+        receive_value = value;
+        receive_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_receive() after(0);
+        }
+    }
+
+    msgsrv react_receive() {
+        react_pending = false;
+        if (receive_present) {
+            if (pingsLeft > 0) {
+                self.serve() after(1);
+            }
+            receive_present = false;
+        }
+    }
+}
+
+reactiveclass Pong(5) {
+    knownrebecs {
+        Ping ping;
+    }
+    statevars {
+        int count;
+        int expected;
+        int receive_value;
+        boolean receive_present;
+        boolean react_pending;
+    }
+
+    Pong() {
+        count = 0;
+        expected = 10;
+        receive_value = 0;
+        receive_present = false;
+        react_pending = false;
+    }
+
+    msgsrv receive(int value) {
+        receive_value = value;
+        receive_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_receive() after(0);
+        }
+    }
+
+    msgsrv react_receive() {
+        react_pending = false;
+        if (receive_present) {
+            count = count + 1;
+            ping.receive(receive_value) after(0);
+            receive_present = false;
+        }
+    }
+}
+
+main {
+    Ping ping(pong):();
+    Pong pong(ping):();
+}

@@ -1,0 +1,52 @@
+{
+  "project_name": "autoRailroad",
+  "final_status": "state_explosion",
+  "iterations": [
+    {
+      "iteration": 1,
+      "candidate_property_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_01\\autoRailroad.candidate_properties.json",
+      "candidate_property_raw": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_01\\autoRailroad.candidate_properties.raw.txt",
+      "candidate_property_summary": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_01\\autoRailroad.candidate_properties.summary.txt",
+      "rebeca_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_01\\autoRailroad.rebeca",
+      "property_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_01\\autoRailroad.property",
+      "live_rebeca_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\src\\autoRailroad.rebeca",
+      "live_property_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\src\\autoRailroad.property",
+      "tr_package_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_01\\autoRailroad.tr_package.json",
+      "tr_package_raw": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_01\\autoRailroad.tr_package.raw.txt",
+      "rmc_result_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_01\\autoRailroad.rmc_result.json",
+      "translator_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_01\\autoRailroad.rmc.translator.log.txt",
+      "compile_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_01\\autoRailroad.rmc.compile.log.txt",
+      "execution_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_01\\autoRailroad.rmc.execution.log.txt",
+      "output_xml_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_01\\autoRailroad.output.xml.txt",
+      "statespace_xml_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_01\\autoRailroad.statespace.xml.txt",
+      "progress_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_01\\autoRailroad.progress.txt",
+      "pipeline_note": null,
+      "repair_case": "state_explosion",
+      "repair_prompt_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_01\\autoRailroad.repair_prompt.txt"
+    },
+    {
+      "iteration": 2,
+      "candidate_property_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_02\\autoRailroad.candidate_properties.json",
+      "candidate_property_raw": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_02\\autoRailroad.candidate_properties.raw.txt",
+      "candidate_property_summary": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_02\\autoRailroad.candidate_properties.summary.txt",
+      "rebeca_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_02\\autoRailroad.rebeca",
+      "property_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_02\\autoRailroad.property",
+      "live_rebeca_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\src\\autoRailroad.rebeca",
+      "live_property_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\src\\autoRailroad.property",
+      "tr_package_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_02\\autoRailroad.tr_package.json",
+      "tr_package_raw": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_02\\autoRailroad.tr_package.raw.txt",
+      "rmc_result_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_02\\autoRailroad.rmc_result.json",
+      "translator_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_02\\autoRailroad.rmc.translator.log.txt",
+      "compile_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_02\\autoRailroad.rmc.compile.log.txt",
+      "execution_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_02\\autoRailroad.rmc.execution.log.txt",
+      "output_xml_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_02\\autoRailroad.output.xml.txt",
+      "statespace_xml_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_02\\autoRailroad.statespace.xml.txt",
+      "progress_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_02\\autoRailroad.progress.txt",
+      "pipeline_note": null,
+      "repair_case": "state_explosion",
+      "repair_prompt_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs\\iter_02\\autoRailroad.repair_prompt.txt"
+    }
+  ],
+  "final_iteration": 2,
+  "run_root": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoRailroad\\runs"
+}

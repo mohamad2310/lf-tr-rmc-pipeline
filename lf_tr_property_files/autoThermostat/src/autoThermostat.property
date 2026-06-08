@@ -1,0 +1,11 @@
+property {
+    define {
+        thermostat_mode_binary = ((t._mode == 0) | (t._mode == 1));
+        thermostat_mode_nonnegative = (t._mode >= 0);
+    }
+
+    Assertion {
+        P1: thermostat_mode_binary;
+        P2: thermostat_mode_nonnegative;
+    }
+}

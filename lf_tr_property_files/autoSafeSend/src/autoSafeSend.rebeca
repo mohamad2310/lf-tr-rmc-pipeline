@@ -1,0 +1,90 @@
+reactiveclass Client(5) {
+    knownrebecs {
+        Server s;
+    }
+    statevars {
+        int req;
+        int in_value;
+        boolean in_present;
+        boolean react_pending;
+    }
+
+    Client() {
+        req = 0;
+        in_value = 0;
+        in_present = false;
+        react_pending = false;
+        self.startup() after(0);
+    }
+
+    msgsrv startup() {
+        req = 1;
+        s.receive_in(req) after(1);
+    }
+
+    msgsrv receive_in(int v) {
+        in_value = v;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            req = 0;
+            in_present = false;
+        }
+    }
+}
+
+reactiveclass Server(5) {
+    knownrebecs {
+        Client c;
+    }
+    statevars {
+        int error;
+        int in_value;
+        boolean in_present;
+        boolean react_pending;
+    }
+
+    Server() {
+        error = 0;
+        in_value = 0;
+        in_present = false;
+        react_pending = false;
+    }
+
+    msgsrv receive_in(int v) {
+        in_value = v;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            if (in_value == 0) {
+                self.err() after(0);
+            } else {
+                c.receive_in(in_value) after(0);
+            }
+            in_present = false;
+        }
+    }
+
+    msgsrv err() {
+        error = 1;
+    }
+}
+
+main {
+    Client c(s):();
+    Server s(c):();
+}

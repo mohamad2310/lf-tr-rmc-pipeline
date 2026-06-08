@@ -1,0 +1,9 @@
+property {
+    define {
+        factorial_N_nonnegative = (factorial.N >= 0);
+    }
+
+    Assertion {
+        P1: factorial_N_nonnegative;
+    }
+}

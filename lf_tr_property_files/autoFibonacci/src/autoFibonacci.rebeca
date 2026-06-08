@@ -1,0 +1,91 @@
+reactiveclass Fib(5) {
+    knownrebecs {
+        Printer printer;
+    }
+    statevars {
+        int N;
+        int result;
+        int lastResult;
+        int secondLastResult;
+    }
+
+    Fib() {
+        N = 0;
+        result = 0;
+        lastResult = 0;
+        secondLastResult = 0;
+        self.start() after(0);
+    }
+
+    msgsrv start() {
+        self.tick() after(0);
+    }
+
+    msgsrv tick() {
+        if (N < 2) {
+            result = 1;
+        } else {
+            result = lastResult + secondLastResult;
+        }
+
+        printer.receive_in(result) after(0);
+
+        self.incrementN() after(0);
+        self.saveLast() after(0);
+        self.saveSecondLast() after(0);
+
+        self.tick() after(1);
+    }
+
+    msgsrv incrementN() {
+        N = N + 1;
+    }
+
+    msgsrv saveLast() {
+        lastResult = result;
+    }
+
+    msgsrv saveSecondLast() {
+        secondLastResult = lastResult;
+    }
+}
+
+reactiveclass Printer(5) {
+    knownrebecs {
+    }
+    statevars {
+        int result;
+        int in_value;
+        boolean in_present;
+        boolean react_pending;
+    }
+
+    Printer() {
+        result = 0;
+        in_value = 0;
+        in_present = false;
+        react_pending = false;
+    }
+
+    msgsrv receive_in(int value) {
+        in_value = value;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            result = in_value;
+            in_present = false;
+        }
+    }
+}
+
+main {
+    Fib fib(printer):();
+    Printer printer():();
+}

@@ -1,0 +1,248 @@
+reactiveclass Camera(10) {
+    knownrebecs {
+        ADASProcessor processor;
+    }
+    statevars {
+        int frame;
+    }
+
+    Camera() {
+        frame = 0;
+        self.t() after(0);
+    }
+
+    msgsrv t() {
+        frame = 1;
+        processor.in2(frame) after(0);
+        self.t() after(17);
+    }
+}
+
+reactiveclass LiDAR(10) {
+    knownrebecs {
+        ADASProcessor processor;
+    }
+    statevars {
+        int frame;
+    }
+
+    LiDAR() {
+        frame = 0;
+        self.t() after(0);
+    }
+
+    msgsrv t() {
+        frame = 2;
+        processor.in1(frame) after(0);
+        self.t() after(34);
+    }
+}
+
+reactiveclass Pedal(5) {
+    Pedal() {
+    }
+
+    msgsrv a() {
+        /*
+         * LF body:
+         *     lf_set(out, 1);
+         *
+         * The Pedal reactor is not instantiated in ADASModel because the
+         * corresponding main-reactor line is commented out. Therefore this
+         * unused class sends no messages in the strict baseline.
+         */
+    }
+}
+
+reactiveclass ADASProcessor(10) {
+    knownrebecs {
+        Brakes brakes;
+        Dashboard dashboard;
+    }
+    statevars {
+        int in1_value;
+        boolean in1_present;
+
+        int in2_value;
+        boolean in2_present;
+
+        int requestStop;
+        boolean react_pending;
+    }
+
+    ADASProcessor() {
+        in1_value = 0;
+        in1_present = false;
+
+        in2_value = 0;
+        in2_present = false;
+
+        requestStop = 0;
+        react_pending = false;
+    }
+
+    msgsrv in1(int value) {
+        in1_value = value;
+        in1_present = true;
+
+        if (!react_pending) {
+            react_pending = true;
+            self.react_inputs() after(0);
+        }
+    }
+
+    msgsrv in2(int value) {
+        in2_value = value;
+        in2_present = true;
+
+        if (!react_pending) {
+            react_pending = true;
+            self.react_inputs() after(0);
+        }
+    }
+
+    msgsrv react_inputs() {
+        react_pending = false;
+
+        if (in1_present || in2_present) {
+            /*
+             * LF reaction(in1, in2) -> a:
+             *     lf_schedule(a, 0);
+             *     self->requestStop = 1;
+             *
+             * The logical action a has declared minimum delay 50 msec.
+             * Scheduling it with offset 0 therefore produces the action
+             * reaction after 50 msec.
+             */
+            requestStop = 1;
+            self.a() after(50);
+        }
+
+        in1_present = false;
+        in2_present = false;
+    }
+
+    msgsrv a() {
+        /*
+         * LF reaction(a) -> out1, out2:
+         *     if (self->requestStop == 1)
+         *         lf_set(out1, 1);
+         *
+         * out1 is connected to Brakes.inADAS after 5 msec.
+         * out2 is declared as an effect but is never explicitly produced by
+         * lf_set(out2, ...), so the strict baseline sends nothing to Dashboard.
+         */
+        if (requestStop == 1) {
+            brakes.inADAS(1) after(5);
+        }
+    }
+}
+
+reactiveclass Brakes(10) {
+    statevars {
+        int inADAS_value;
+        boolean inADAS_present;
+
+        int inPedal_value;
+        boolean inPedal_present;
+
+        int brakesApplied;
+        boolean react_pending;
+    }
+
+    Brakes() {
+        inADAS_value = 0;
+        inADAS_present = false;
+
+        inPedal_value = 0;
+        inPedal_present = false;
+
+        brakesApplied = 0;
+        react_pending = false;
+    }
+
+    msgsrv inADAS(int value) {
+        inADAS_value = value;
+        inADAS_present = true;
+
+        if (!react_pending) {
+            react_pending = true;
+            self.react_inputs() after(0);
+        }
+    }
+
+    msgsrv inPedal(int value) {
+        inPedal_value = value;
+        inPedal_present = true;
+
+        if (!react_pending) {
+            react_pending = true;
+            self.react_inputs() after(0);
+        }
+    }
+
+    msgsrv react_inputs() {
+        react_pending = false;
+
+        if (inADAS_present || inPedal_present) {
+            /*
+             * LF reaction(inADAS, inPedal):
+             *     self->brakesApplied = 1;
+             */
+            brakesApplied = 1;
+        }
+
+        inADAS_present = false;
+        inPedal_present = false;
+    }
+}
+
+reactiveclass Dashboard(10) {
+    statevars {
+        int in_value;
+        boolean in_present;
+
+        int received;
+        boolean react_pending;
+    }
+
+    Dashboard() {
+        in_value = 0;
+        in_present = false;
+
+        received = 0;
+        react_pending = false;
+    }
+
+    msgsrv in(int value) {
+        in_value = value;
+        in_present = true;
+
+        if (!react_pending) {
+            react_pending = true;
+            self.react_input() after(0);
+        }
+    }
+
+    msgsrv react_input() {
+        react_pending = false;
+
+        if (in_present) {
+            /*
+             * LF reaction(in):
+             *     self->received = 1;
+             */
+            received = 1;
+        }
+
+        in_present = false;
+    }
+}
+
+main {
+    Camera c(p):();
+    LiDAR l(p):();
+    ADASProcessor p(b, d):();
+    Brakes b():();
+    Dashboard d():();
+}

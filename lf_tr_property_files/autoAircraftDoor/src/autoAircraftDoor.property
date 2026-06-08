@@ -1,0 +1,17 @@
+property {
+    define {
+        vision_ramp_is_zero = (vision.ramp == 0);
+        vision_in_present_is_boolean = ((vision.in_present == true) | (vision.in_present == false));
+        vision_react_pending_is_boolean = ((vision.react_pending == true) | (vision.react_pending == false));
+        door_in_present_is_boolean = ((door.in_present == true) | (door.in_present == false));
+        door_react_pending_is_boolean = ((door.react_pending == true) | (door.react_pending == false));
+    }
+
+    Assertion {
+        P1: vision_ramp_is_zero;
+        P2: vision_in_present_is_boolean;
+        P3: vision_react_pending_is_boolean;
+        P4: door_in_present_is_boolean;
+        P5: door_react_pending_is_boolean;
+    }
+}

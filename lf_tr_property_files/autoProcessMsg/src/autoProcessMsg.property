@@ -1,0 +1,13 @@
+property {
+    define {
+        panic_is_binary = (((task.panic == 0) | (task.panic == 1)));
+        counter_nonnegative = ((task.counter >= 0));
+        messageSent_nonnegative = ((task.messageSent >= 0));
+    }
+
+    Assertion {
+        P1: panic_is_binary;
+        P2: counter_nonnegative;
+        P3: messageSent_nonnegative;
+    }
+}

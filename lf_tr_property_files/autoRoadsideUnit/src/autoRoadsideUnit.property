@@ -1,0 +1,15 @@
+property {
+    define {
+        v1_duration_fixed = (v1.duration_of_use == 1);
+        v2_duration_fixed = (v2.duration_of_use == 1);
+        rsu_const_wait_fixed = (rsu.const_wait == 1);
+        rsu_current_time_fixed = (rsu.current_time == 0);
+    }
+
+    Assertion {
+        P1: v1_duration_fixed;
+        P2: v2_duration_fixed;
+        P3: rsu_const_wait_fixed;
+        P4: rsu_current_time_fixed;
+    }
+}

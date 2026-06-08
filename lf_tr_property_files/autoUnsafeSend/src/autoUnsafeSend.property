@@ -1,0 +1,9 @@
+property {
+    define {
+        client_req_is_zero = (c.req == 0);
+    }
+
+    Assertion {
+        P1: client_req_is_zero;
+    }
+}

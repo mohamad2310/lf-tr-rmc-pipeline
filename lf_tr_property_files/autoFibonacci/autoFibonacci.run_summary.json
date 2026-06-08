@@ -1,0 +1,52 @@
+{
+  "project_name": "autoFibonacci",
+  "final_status": "state_explosion",
+  "iterations": [
+    {
+      "iteration": 1,
+      "candidate_property_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_01\\autoFibonacci.candidate_properties.json",
+      "candidate_property_raw": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_01\\autoFibonacci.candidate_properties.raw.txt",
+      "candidate_property_summary": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_01\\autoFibonacci.candidate_properties.summary.txt",
+      "rebeca_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_01\\autoFibonacci.rebeca",
+      "property_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_01\\autoFibonacci.property",
+      "live_rebeca_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\src\\autoFibonacci.rebeca",
+      "live_property_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\src\\autoFibonacci.property",
+      "tr_package_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_01\\autoFibonacci.tr_package.json",
+      "tr_package_raw": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_01\\autoFibonacci.tr_package.raw.txt",
+      "rmc_result_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_01\\autoFibonacci.rmc_result.json",
+      "translator_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_01\\autoFibonacci.rmc.translator.log.txt",
+      "compile_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_01\\autoFibonacci.rmc.compile.log.txt",
+      "execution_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_01\\autoFibonacci.rmc.execution.log.txt",
+      "output_xml_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_01\\autoFibonacci.output.xml.txt",
+      "statespace_xml_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_01\\autoFibonacci.statespace.xml.txt",
+      "progress_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_01\\autoFibonacci.progress.txt",
+      "pipeline_note": null,
+      "repair_case": "state_explosion",
+      "repair_prompt_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_01\\autoFibonacci.repair_prompt.txt"
+    },
+    {
+      "iteration": 2,
+      "candidate_property_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_02\\autoFibonacci.candidate_properties.json",
+      "candidate_property_raw": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_02\\autoFibonacci.candidate_properties.raw.txt",
+      "candidate_property_summary": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_02\\autoFibonacci.candidate_properties.summary.txt",
+      "rebeca_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_02\\autoFibonacci.rebeca",
+      "property_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_02\\autoFibonacci.property",
+      "live_rebeca_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\src\\autoFibonacci.rebeca",
+      "live_property_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\src\\autoFibonacci.property",
+      "tr_package_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_02\\autoFibonacci.tr_package.json",
+      "tr_package_raw": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_02\\autoFibonacci.tr_package.raw.txt",
+      "rmc_result_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_02\\autoFibonacci.rmc_result.json",
+      "translator_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_02\\autoFibonacci.rmc.translator.log.txt",
+      "compile_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_02\\autoFibonacci.rmc.compile.log.txt",
+      "execution_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_02\\autoFibonacci.rmc.execution.log.txt",
+      "output_xml_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_02\\autoFibonacci.output.xml.txt",
+      "statespace_xml_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_02\\autoFibonacci.statespace.xml.txt",
+      "progress_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_02\\autoFibonacci.progress.txt",
+      "pipeline_note": null,
+      "repair_case": "state_explosion",
+      "repair_prompt_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs\\iter_02\\autoFibonacci.repair_prompt.txt"
+    }
+  ],
+  "final_iteration": 2,
+  "run_root": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoFibonacci\\runs"
+}

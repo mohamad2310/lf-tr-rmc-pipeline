@@ -1,0 +1,30 @@
+{
+  "project_name": "autoAircraftDoor",
+  "final_status": "satisfied_with_deadlock",
+  "iterations": [
+    {
+      "iteration": 1,
+      "candidate_property_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\runs\\iter_01\\autoAircraftDoor.candidate_properties.json",
+      "candidate_property_raw": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\runs\\iter_01\\autoAircraftDoor.candidate_properties.raw.txt",
+      "candidate_property_summary": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\runs\\iter_01\\autoAircraftDoor.candidate_properties.summary.txt",
+      "rebeca_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\runs\\iter_01\\autoAircraftDoor.rebeca",
+      "property_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\runs\\iter_01\\autoAircraftDoor.property",
+      "live_rebeca_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\src\\autoAircraftDoor.rebeca",
+      "live_property_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\src\\autoAircraftDoor.property",
+      "tr_package_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\runs\\iter_01\\autoAircraftDoor.tr_package.json",
+      "tr_package_raw": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\runs\\iter_01\\autoAircraftDoor.tr_package.raw.txt",
+      "rmc_result_json": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\runs\\iter_01\\autoAircraftDoor.rmc_result.json",
+      "translator_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\runs\\iter_01\\autoAircraftDoor.rmc.translator.log.txt",
+      "compile_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\runs\\iter_01\\autoAircraftDoor.rmc.compile.log.txt",
+      "execution_log_path": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\runs\\iter_01\\autoAircraftDoor.rmc.execution.log.txt",
+      "output_xml_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\runs\\iter_01\\autoAircraftDoor.output.xml.txt",
+      "statespace_xml_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\runs\\iter_01\\autoAircraftDoor.statespace.xml.txt",
+      "progress_copy": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\runs\\iter_01\\autoAircraftDoor.progress.txt",
+      "pipeline_note": "Pipeline policy accepted the raw RMC deadlock result as a terminal successful outcome. The raw RMC status remains `deadlock`.",
+      "repair_case": "accepted_deadlock",
+      "repair_prompt_path": null
+    }
+  ],
+  "final_iteration": 1,
+  "run_root": "C:\\Users\\mohma\\Downloads\\Afra-win32.win32.x86_64\\workspace\\autoAircraftDoor\\runs"
+}

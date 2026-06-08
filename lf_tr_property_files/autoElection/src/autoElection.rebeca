@@ -1,0 +1,161 @@
+reactiveclass Node0(5) {
+    knownrebecs {
+        Node1 n1;
+    }
+    statevars {
+        int id;
+        int elected;
+        int in_value;
+        boolean in_present;
+        boolean react_pending;
+    }
+
+    Node0() {
+        id = 0;
+        elected = 0;
+        in_value = 0;
+        in_present = false;
+        react_pending = false;
+        self.startup() after(0);
+    }
+
+    msgsrv startup() {
+        id = 0;
+        n1.receive_in(id) after(0);
+    }
+
+    msgsrv receive_in(int v) {
+        in_value = v;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            if (in_value > id) {
+                self.action_a(in_value) after(10);
+            } else if (in_value == id) {
+                elected = 1;
+            }
+            in_present = false;
+        }
+    }
+
+    msgsrv action_a(int v) {
+        n1.receive_in(v) after(0);
+    }
+}
+
+reactiveclass Node1(5) {
+    knownrebecs {
+        Node2 n2;
+    }
+    statevars {
+        int id;
+        int elected;
+        int in_value;
+        boolean in_present;
+        boolean react_pending;
+    }
+
+    Node1() {
+        id = 1;
+        elected = 0;
+        in_value = 0;
+        in_present = false;
+        react_pending = false;
+        self.startup() after(0);
+    }
+
+    msgsrv startup() {
+        id = 1;
+        n2.receive_in(id) after(0);
+    }
+
+    msgsrv receive_in(int v) {
+        in_value = v;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            if (in_value > id) {
+                self.action_a(in_value) after(10);
+            } else if (in_value == id) {
+                elected = 1;
+            }
+            in_present = false;
+        }
+    }
+
+    msgsrv action_a(int v) {
+        n2.receive_in(v) after(0);
+    }
+}
+
+reactiveclass Node2(5) {
+    knownrebecs {
+        Node0 n0;
+    }
+    statevars {
+        int id;
+        int elected;
+        int in_value;
+        boolean in_present;
+        boolean react_pending;
+    }
+
+    Node2() {
+        id = 2;
+        elected = 0;
+        in_value = 0;
+        in_present = false;
+        react_pending = false;
+        self.startup() after(0);
+    }
+
+    msgsrv startup() {
+        id = 2;
+        n0.receive_in(id) after(0);
+    }
+
+    msgsrv receive_in(int v) {
+        in_value = v;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            if (in_value > id) {
+                self.action_a(in_value) after(10);
+            } else if (in_value == id) {
+                elected = 1;
+            }
+            in_present = false;
+        }
+    }
+
+    msgsrv action_a(int v) {
+        n0.receive_in(v) after(0);
+    }
+}
+
+main {
+    Node0 node0(node1):();
+    Node1 node1(node2):();
+    Node2 node2(node0):();
+}

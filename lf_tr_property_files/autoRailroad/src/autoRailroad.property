@@ -1,0 +1,33 @@
+property {
+    define {
+        train_w_mode_domain = (((train_w._mode == 0) | (train_w._mode == 1)) | (train_w._mode == 2));
+        train_e_mode_domain = (((train_e._mode == 0) | (train_e._mode == 1)) | (train_e._mode == 2));
+
+        train_w_out_domain = ((train_w._out == 0) | (train_w._out == 1));
+        train_e_out_domain = ((train_e._out == 0) | (train_e._out == 1));
+
+        controller_west_domain = ((controller.west == 0) | (controller.west == 1));
+        controller_east_domain = ((controller.east == 0) | (controller.east == 1));
+        controller_near_w_domain = ((controller.near_w == 0) | (controller.near_w == 1));
+        controller_near_e_domain = ((controller.near_e == 0) | (controller.near_e == 1));
+
+        east_zero_implies_near_e_one = ((controller.east != 0) | (controller.near_e == 1));
+        west_zero_implies_near_w_one = ((controller.west != 0) | (controller.near_w == 1));
+
+        no_both_green = (!((controller.west == 0) & (controller.east == 0)));
+    }
+
+    Assertion {
+        P1: train_w_mode_domain;
+        P2: train_e_mode_domain;
+        P3: train_w_out_domain;
+        P4: train_e_out_domain;
+        P5: controller_west_domain;
+        P6: controller_east_domain;
+        P7: controller_near_w_domain;
+        P8: controller_near_e_domain;
+        P9: east_zero_implies_near_e_one;
+        P10: west_zero_implies_near_w_one;
+        P11: no_both_green;
+    }
+}

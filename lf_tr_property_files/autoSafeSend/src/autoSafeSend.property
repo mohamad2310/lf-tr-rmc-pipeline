@@ -1,0 +1,11 @@
+property {
+    define {
+        client_req_in_domain = (((c.req == 0) | (c.req == 1)));
+        client_req_nonnegative = (c.req >= 0);
+    }
+
+    Assertion {
+        P1: client_req_in_domain;
+        P2: client_req_nonnegative;
+    }
+}

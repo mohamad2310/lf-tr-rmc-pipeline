@@ -1,0 +1,184 @@
+reactiveclass UMS(10) {
+    knownrebecs {
+        Train t;
+    }
+    statevars {
+        int pos;
+        int inUse;
+
+        int query_value;
+        boolean query_present;
+
+        int req_value;
+        boolean req_present;
+
+        int done_value;
+        boolean done_present;
+
+        boolean react_query_pending;
+        boolean react_req_pending;
+        boolean react_done_pending;
+    }
+
+    UMS() {
+        pos = 0;
+        inUse = 0;
+
+        query_value = 0;
+        query_present = false;
+
+        req_value = 0;
+        req_present = false;
+
+        done_value = 0;
+        done_present = false;
+
+        react_query_pending = false;
+        react_req_pending = false;
+        react_done_pending = false;
+    }
+
+    msgsrv receive_query(int value) {
+        query_value = value;
+        query_present = true;
+        if (!react_query_pending) {
+            react_query_pending = true;
+            self.react_query() after(0);
+        }
+    }
+
+    msgsrv receive_req(int value) {
+        req_value = value;
+        req_present = true;
+        if (!react_req_pending) {
+            react_req_pending = true;
+            self.react_req() after(0);
+        }
+    }
+
+    msgsrv receive_done(int value) {
+        done_value = value;
+        done_present = true;
+        if (!react_done_pending) {
+            react_done_pending = true;
+            self.react_done() after(0);
+        }
+    }
+
+    msgsrv react_query() {
+        react_query_pending = false;
+        if (query_present) {
+            t.receive_response(pos) after(0);
+            query_present = false;
+        }
+    }
+
+    msgsrv react_req() {
+        react_req_pending = false;
+        if (req_present) {
+            if (inUse == 0) {
+                t.receive_grant(1) after(0);
+                self.issue() after(0);
+            } else {
+                t.receive_grant(0) after(0);
+            }
+            req_present = false;
+        }
+    }
+
+    msgsrv react_done() {
+        react_done_pending = false;
+        if (done_present) {
+            inUse = 0;
+            done_present = false;
+        }
+    }
+
+    msgsrv issue() {
+        inUse = 1;
+    }
+}
+
+reactiveclass Train(10) {
+    knownrebecs {
+        UMS u;
+    }
+    statevars {
+        int response_value;
+        boolean response_present;
+
+        int grant_value;
+        boolean grant_present;
+
+        boolean react_response_pending;
+        boolean react_grant_pending;
+    }
+
+    Train() {
+        response_value = 0;
+        response_present = false;
+
+        grant_value = 0;
+        grant_present = false;
+
+        react_response_pending = false;
+        react_grant_pending = false;
+
+        self.startup() after(0);
+    }
+
+    msgsrv startup() {
+        u.receive_query(1) after(0);
+    }
+
+    msgsrv receive_response(int value) {
+        response_value = value;
+        response_present = true;
+        if (!react_response_pending) {
+            react_response_pending = true;
+            self.react_response() after(0);
+        }
+    }
+
+    msgsrv receive_grant(int value) {
+        grant_value = value;
+        grant_present = true;
+        if (!react_grant_pending) {
+            react_grant_pending = true;
+            self.react_grant() after(0);
+        }
+    }
+
+    msgsrv react_response() {
+        react_response_pending = false;
+        if (response_present) {
+            if (response_value == 0) {
+                self.wait_action() after(0);
+            } else {
+                u.receive_req(1) after(0);
+            }
+            response_present = false;
+        }
+    }
+
+    msgsrv react_grant() {
+        react_grant_pending = false;
+        if (grant_present) {
+            self.passing_action() after(0);
+            grant_present = false;
+        }
+    }
+
+    msgsrv wait_action() {
+        u.receive_req(1) after(2);
+    }
+
+    msgsrv passing_action() {
+        u.receive_done(1) after(10);
+    }
+}
+
+main {
+    UMS u(t):();
+    Train t(u):();
+}

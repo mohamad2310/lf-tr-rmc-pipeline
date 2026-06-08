@@ -1,0 +1,11 @@
+property {
+    define {
+        fault_nonnegative = (c.fault >= 0);
+        fault_is_binary = ((c.fault == 0) | (c.fault == 1));
+    }
+
+    Assertion {
+        P1: fault_nonnegative;
+        P2: fault_is_binary;
+    }
+}

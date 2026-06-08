@@ -1,0 +1,219 @@
+reactiveclass Source(5) {
+    knownrebecs {
+        Node1 n1;
+    }
+    statevars {
+        int received;
+        int in_val;
+        boolean in_present;
+        boolean react_pending;
+    }
+
+    Source() {
+        received = 0;
+        in_val = 0;
+        in_present = false;
+        react_pending = false;
+        self.start_action() after(0);
+    }
+
+    msgsrv start_action() {
+        n1.recv_in(received) after(1);
+    }
+
+    msgsrv recv_in(int v) {
+        in_val = v;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            received = in_val;
+            in_present = false;
+        }
+    }
+}
+
+reactiveclass Node1(5) {
+    knownrebecs {
+        Node2 next;
+    }
+    statevars {
+        int in_val;
+        boolean in_present;
+        boolean react_pending;
+    }
+
+    Node1() {
+        in_val = 0;
+        in_present = false;
+        react_pending = false;
+    }
+
+    msgsrv recv_in(int v) {
+        in_val = v;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            next.recv_in(in_val + 1) after(1);
+            in_present = false;
+        }
+    }
+}
+
+reactiveclass Node2(5) {
+    knownrebecs {
+        Node3 next;
+    }
+    statevars {
+        int in_val;
+        boolean in_present;
+        boolean react_pending;
+    }
+
+    Node2() {
+        in_val = 0;
+        in_present = false;
+        react_pending = false;
+    }
+
+    msgsrv recv_in(int v) {
+        in_val = v;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            next.recv_in(in_val + 1) after(1);
+            in_present = false;
+        }
+    }
+}
+
+reactiveclass Node3(5) {
+    knownrebecs {
+        Node4 next;
+    }
+    statevars {
+        int in_val;
+        boolean in_present;
+        boolean react_pending;
+    }
+
+    Node3() {
+        in_val = 0;
+        in_present = false;
+        react_pending = false;
+    }
+
+    msgsrv recv_in(int v) {
+        in_val = v;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            next.recv_in(in_val + 1) after(1);
+            in_present = false;
+        }
+    }
+}
+
+reactiveclass Node4(5) {
+    knownrebecs {
+        Node5 next;
+    }
+    statevars {
+        int in_val;
+        boolean in_present;
+        boolean react_pending;
+    }
+
+    Node4() {
+        in_val = 0;
+        in_present = false;
+        react_pending = false;
+    }
+
+    msgsrv recv_in(int v) {
+        in_val = v;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            next.recv_in(in_val + 1) after(1);
+            in_present = false;
+        }
+    }
+}
+
+reactiveclass Node5(5) {
+    knownrebecs {
+        Source source;
+    }
+    statevars {
+        int in_val;
+        boolean in_present;
+        boolean react_pending;
+    }
+
+    Node5() {
+        in_val = 0;
+        in_present = false;
+        react_pending = false;
+    }
+
+    msgsrv recv_in(int v) {
+        in_val = v;
+        in_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react_in() after(0);
+        }
+    }
+
+    msgsrv react_in() {
+        react_pending = false;
+        if (in_present) {
+            source.recv_in(in_val + 1) after(1);
+            in_present = false;
+        }
+    }
+}
+
+main {
+    Source s(n1):();
+    Node1 n1(n2):();
+    Node2 n2(n3):();
+    Node3 n3(n4):();
+    Node4 n4(n5):();
+    Node5 n5(s):();
+}

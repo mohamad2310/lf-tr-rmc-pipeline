@@ -1,0 +1,17 @@
+property {
+    define {
+        fib_N_nonnegative = (fib.N >= 0);
+        fib_result_nonnegative = (fib.result >= 0);
+        fib_lastResult_nonnegative = (fib.lastResult >= 0);
+        fib_secondLastResult_nonnegative = (fib.secondLastResult >= 0);
+        printer_result_nonnegative = (printer.result >= 0);
+    }
+
+    Assertion {
+        P1: fib_N_nonnegative;
+        P2: fib_result_nonnegative;
+        P3: fib_lastResult_nonnegative;
+        P4: fib_secondLastResult_nonnegative;
+        P5: printer_result_nonnegative;
+    }
+}

@@ -1,0 +1,115 @@
+reactiveclass Environment(5) {
+    knownrebecs {
+        _Thermostat t;
+    }
+    statevars {
+        int _heatOn;
+        int _temperature;
+
+        int heatOn_value;
+        boolean heatOn_present;
+        boolean react_heatOn_pending;
+    }
+
+    Environment() {
+        _heatOn = 0;
+        _temperature = 19;
+
+        heatOn_value = 0;
+        heatOn_present = false;
+        react_heatOn_pending = false;
+
+        self.timer_t() after(1);
+    }
+
+    msgsrv timer_t() {
+        if (_heatOn == 0) {
+            _temperature = _temperature - 1;
+        }
+        else {
+            _temperature = _temperature + 1;
+        }
+
+        t.receive_temperature(_temperature) after(0);
+
+        self.timer_t() after(10);
+    }
+
+    msgsrv receive_heatOn(int value) {
+        heatOn_value = value;
+        heatOn_present = true;
+        if (!react_heatOn_pending) {
+            react_heatOn_pending = true;
+            self.react_heatOn() after(0);
+        }
+    }
+
+    msgsrv react_heatOn() {
+        react_heatOn_pending = false;
+        if (heatOn_present) {
+            _heatOn = heatOn_value;
+            heatOn_present = false;
+        }
+    }
+}
+
+reactiveclass _Thermostat(5) {
+    knownrebecs {
+        Environment e;
+    }
+    statevars {
+        int _mode;
+
+        int temperature_value;
+        boolean temperature_present;
+        boolean react_temperature_pending;
+    }
+
+    _Thermostat() {
+        _mode = 0;
+
+        temperature_value = 0;
+        temperature_present = false;
+        react_temperature_pending = false;
+    }
+
+    msgsrv receive_temperature(int value) {
+        temperature_value = value;
+        temperature_present = true;
+        if (!react_temperature_pending) {
+            react_temperature_pending = true;
+            self.react_temperature() after(0);
+        }
+    }
+
+    msgsrv react_temperature() {
+        react_temperature_pending = false;
+        if (temperature_present) {
+            if (_mode == 0) {
+                if (temperature_value <= 18) {
+                    e.receive_heatOn(1) after(0);
+                    self.changeMode() after(0);
+                }
+            }
+            else if (_mode == 0) {
+                if (temperature_value >= 22) {
+                    e.receive_heatOn(0) after(0);
+                    self.changeMode() after(0);
+                }
+            }
+            temperature_present = false;
+        }
+    }
+
+    msgsrv changeMode() {
+        if (_mode == 0)
+            _mode = 1;
+        else
+            _mode = 0;
+    }
+}
+
+main {
+    Environment e(t):();
+    _Thermostat t(e):();
+}

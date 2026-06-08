@@ -1,0 +1,68 @@
+reactiveclass Trigger(10) {
+    knownrebecs {
+        Task task1;
+        Task task2;
+        Task task3;
+        Task task4;
+        Task task5;
+    }
+    statevars {
+    }
+
+    Trigger() {
+        self.fire() after(0);
+    }
+
+    msgsrv fire() {
+        task1.cnt(1) after(0);
+        task2.cnt(1) after(0);
+        task3.cnt(1) after(0);
+        task4.cnt(1) after(0);
+        task5.cnt(1) after(0);
+        self.fire() after(1);
+    }
+}
+
+reactiveclass Task(10) {
+    knownrebecs {
+    }
+    statevars {
+        int counter;
+        int cnt_value;
+        boolean cnt_present;
+        boolean react_pending;
+    }
+
+    Task() {
+        counter = 0;
+        cnt_value = 0;
+        cnt_present = false;
+        react_pending = false;
+    }
+
+    msgsrv cnt(int value) {
+        cnt_value = value;
+        cnt_present = true;
+        if (!react_pending) {
+            react_pending = true;
+            self.react() after(0);
+        }
+    }
+
+    msgsrv react() {
+        react_pending = false;
+        if (cnt_present) {
+            counter = counter + 2;
+            cnt_present = false;
+        }
+    }
+}
+
+main {
+    Task task1():();
+    Task task2():();
+    Task task3():();
+    Task task4():();
+    Task task5():();
+    Trigger trigger(task1, task2, task3, task4, task5):();
+}

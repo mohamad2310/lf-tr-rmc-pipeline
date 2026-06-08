@@ -1,0 +1,45 @@
+reactiveclass Controller(5) {
+    knownrebecs {
+    }
+    statevars {
+        int fault;
+        int out;
+        boolean out_present;
+        int out2;
+        boolean out2_present;
+    }
+
+    Controller() {
+        fault = 0;
+        out = 0;
+        out_present = false;
+        out2 = 0;
+        out2_present = false;
+        self.startup() after(0);
+    }
+
+    msgsrv startup() {
+        out_present = false;
+        out2_present = false;
+
+        fault = 1;
+
+        if (fault == 1) {
+            self.turnOff(0) after(1);
+            out = 5;
+            out_present = true;
+            out2 = 10;
+            out2_present = true;
+        }
+    }
+
+    msgsrv turnOff(int value) {
+        if (value == 1) {
+            fault = 0;
+        }
+    }
+}
+
+main {
+    Controller c():();
+}

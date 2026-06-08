@@ -1,0 +1,29 @@
+property {
+    define {
+        task1_counter_nonnegative = (task1.counter >= 0);
+        task2_counter_nonnegative = (task2.counter >= 0);
+        task3_counter_nonnegative = (task3.counter >= 0);
+        task4_counter_nonnegative = (task4.counter >= 0);
+        task5_counter_nonnegative = (task5.counter >= 0);
+        task1_counter_even = ((task1.counter % 2) == 0);
+        task2_counter_even = ((task2.counter % 2) == 0);
+        task3_counter_even = ((task3.counter % 2) == 0);
+        task4_counter_even = ((task4.counter % 2) == 0);
+        task5_counter_even = ((task5.counter % 2) == 0);
+        all_task_counters_safe = ((task1_counter_nonnegative & task1_counter_even) & (task2_counter_nonnegative & task2_counter_even) & (task3_counter_nonnegative & task3_counter_even) & (task4_counter_nonnegative & task4_counter_even) & (task5_counter_nonnegative & task5_counter_even));
+    }
+
+    Assertion {
+        P1_task1_nonnegative: task1_counter_nonnegative;
+        P1_task2_nonnegative: task2_counter_nonnegative;
+        P1_task3_nonnegative: task3_counter_nonnegative;
+        P1_task4_nonnegative: task4_counter_nonnegative;
+        P1_task5_nonnegative: task5_counter_nonnegative;
+        P2_task1_even: task1_counter_even;
+        P2_task2_even: task2_counter_even;
+        P2_task3_even: task3_counter_even;
+        P2_task4_even: task4_counter_even;
+        P2_task5_even: task5_counter_even;
+        P7_all_tasks_safe: all_task_counters_safe;
+    }
+}
