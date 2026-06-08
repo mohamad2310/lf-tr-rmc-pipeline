@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# Secrets / environment
+.env
+*.env
+
+# Generated pipeline outputs
+runs/
+workspace/
+analysis_bounded/
+*.run_summary.json
+*.candidate_properties.json
+*.candidate_properties.raw.txt
+*.candidate_properties.summary.txt
+*.tr_package.json
+*.tr_package.raw.txt
+*.rmc.translator.log.txt
+*.rmc.compile.log.txt
+*.rmc.execution.log.txt
+*.output.xml.txt
+*.statespace.xml.txt
+*.progress.txt
+*.repair_prompt.txt
+
+# Generated RMC/C++ artifacts
+*.exe
+*.cpp
+*.o
+*.obj
+output.xml
+statespace.xml
+progress
+
+# Local tools and archives
+Afra*/
+*.jar
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
