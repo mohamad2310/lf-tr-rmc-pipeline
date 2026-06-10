@@ -1,0 +1,21 @@
+property {
+    define {
+        trigger_ticks_within_bound = (trigger.ticks <= trigger.maxTicks);
+
+        task1_counter_domain = ((((((task1.counter == 0) | (task1.counter == 2)) | (task1.counter == 4)) | (task1.counter == 6)) | (task1.counter == 8)) | (task1.counter == 10));
+        task2_counter_domain = ((((((task2.counter == 0) | (task2.counter == 2)) | (task2.counter == 4)) | (task2.counter == 6)) | (task2.counter == 8)) | (task2.counter == 10));
+        task3_counter_domain = ((((((task3.counter == 0) | (task3.counter == 2)) | (task3.counter == 4)) | (task3.counter == 6)) | (task3.counter == 8)) | (task3.counter == 10));
+        task4_counter_domain = ((((((task4.counter == 0) | (task4.counter == 2)) | (task4.counter == 4)) | (task4.counter == 6)) | (task4.counter == 8)) | (task4.counter == 10));
+        task5_counter_domain = ((((((task5.counter == 0) | (task5.counter == 2)) | (task5.counter == 4)) | (task5.counter == 6)) | (task5.counter == 8)) | (task5.counter == 10));
+    }
+
+    Assertion {
+        P1: trigger_ticks_within_bound;
+
+        P2: task1_counter_domain;
+        P3: task2_counter_domain;
+        P4: task3_counter_domain;
+        P5: task4_counter_domain;
+        P6: task5_counter_domain;
+    }
+}
