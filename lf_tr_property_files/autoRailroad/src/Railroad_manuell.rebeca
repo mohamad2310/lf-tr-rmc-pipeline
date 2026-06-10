@@ -2,6 +2,7 @@ reactiveclass TrainW(20) {
     knownrebecs {
         Controller controller;
     }
+
     statevars {
         int _out;
         int _mode;
@@ -52,11 +53,15 @@ reactiveclass TrainW(20) {
 
             self.t() after(1);
         }
+        else {
+            self.t() after(1000);
+        }
     }
 
     msgsrv signal(int v) {
         signal_value = v;
         signal_present = true;
+
         if (!react_pending) {
             react_pending = true;
             self.react_signal_or_outUpdated() after(0);
@@ -65,6 +70,7 @@ reactiveclass TrainW(20) {
 
     msgsrv outUpdated() {
         outUpdated_present = true;
+
         if (!react_pending) {
             react_pending = true;
             self.react_signal_or_outUpdated() after(0);
@@ -77,6 +83,7 @@ reactiveclass TrainW(20) {
         int sig;
 
         react_pending = false;
+
         had_signal = signal_present;
         had_outUpdated = outUpdated_present;
         sig = signal_value;
@@ -118,6 +125,7 @@ reactiveclass TrainE(20) {
     knownrebecs {
         Controller controller;
     }
+
     statevars {
         int _out;
         int _mode;
@@ -168,11 +176,15 @@ reactiveclass TrainE(20) {
 
             self.t() after(1);
         }
+        else {
+            self.t() after(1000);
+        }
     }
 
     msgsrv signal(int v) {
         signal_value = v;
         signal_present = true;
+
         if (!react_pending) {
             react_pending = true;
             self.react_signal_or_outUpdated() after(0);
@@ -181,6 +193,7 @@ reactiveclass TrainE(20) {
 
     msgsrv outUpdated() {
         outUpdated_present = true;
+
         if (!react_pending) {
             react_pending = true;
             self.react_signal_or_outUpdated() after(0);
@@ -193,6 +206,7 @@ reactiveclass TrainE(20) {
         int sig;
 
         react_pending = false;
+
         had_signal = signal_present;
         had_outUpdated = outUpdated_present;
         sig = signal_value;
@@ -235,6 +249,7 @@ reactiveclass Controller(30) {
         TrainW train_w;
         TrainE train_e;
     }
+
     statevars {
         int west;
         int east;
@@ -273,6 +288,7 @@ reactiveclass Controller(30) {
     msgsrv out_w(int v) {
         out_w_value = v;
         out_w_present = true;
+
         if (!react_pending) {
             react_pending = true;
             self.react_outs() after(0);
@@ -282,6 +298,7 @@ reactiveclass Controller(30) {
     msgsrv out_e(int v) {
         out_e_value = v;
         out_e_present = true;
+
         if (!react_pending) {
             react_pending = true;
             self.react_outs() after(0);
@@ -294,12 +311,15 @@ reactiveclass Controller(30) {
         if (out_e_present && out_e_value == 0) {
             near_e = 1;
         }
+
         if (out_e_present && out_e_value == 1) {
             near_e = 0;
         }
+
         if (out_w_present && out_w_value == 0) {
             near_w = 1;
         }
+
         if (out_w_present && out_w_value == 1) {
             near_w = 0;
         }
@@ -320,9 +340,6 @@ reactiveclass Controller(30) {
 
         out_w_present = false;
         out_e_present = false;
-
-        self.westUpdated() after(0);
-        self.eastUpdated() after(0);
     }
 
     msgsrv westUpdated() {
