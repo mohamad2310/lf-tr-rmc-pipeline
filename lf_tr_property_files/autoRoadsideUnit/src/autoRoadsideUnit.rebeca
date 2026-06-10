@@ -3,19 +3,19 @@ reactiveclass Vehicle(10) {
         RSU rsu;
     }
     statevars {
-        int duration_of_use;
-
         int grant_value;
         boolean grant_present;
-        boolean grant_pending;
+        boolean grant_react_pending;
+
+        int duration_of_use;
     }
 
     Vehicle() {
-        duration_of_use = 1;
-
         grant_value = 0;
         grant_present = false;
-        grant_pending = false;
+        grant_react_pending = false;
+
+        duration_of_use = 1;
 
         self.startup() after(0);
     }
@@ -24,21 +24,17 @@ reactiveclass Vehicle(10) {
         rsu.request_1(1) after(0);
     }
 
-    msgsrv startup_v2() {
-        rsu.request_2(1) after(0);
-    }
-
     msgsrv grant(int value) {
         grant_value = value;
         grant_present = true;
-        if (!grant_pending) {
-            grant_pending = true;
+        if (!grant_react_pending) {
+            grant_react_pending = true;
             self.react_grant() after(0);
         }
     }
 
     msgsrv react_grant() {
-        grant_pending = false;
+        grant_react_pending = false;
         if (grant_present) {
             grant_present = false;
             self.finish() after(5);
@@ -48,10 +44,6 @@ reactiveclass Vehicle(10) {
     msgsrv finish() {
         rsu.done_1(1) after(0);
     }
-
-    msgsrv finish_v2() {
-        rsu.done_2(1) after(0);
-    }
 }
 
 reactiveclass Vehicle2(10) {
@@ -59,19 +51,19 @@ reactiveclass Vehicle2(10) {
         RSU rsu;
     }
     statevars {
-        int duration_of_use;
-
         int grant_value;
         boolean grant_present;
-        boolean grant_pending;
+        boolean grant_react_pending;
+
+        int duration_of_use;
     }
 
     Vehicle2() {
-        duration_of_use = 1;
-
         grant_value = 0;
         grant_present = false;
-        grant_pending = false;
+        grant_react_pending = false;
+
+        duration_of_use = 1;
 
         self.startup() after(0);
     }
@@ -83,14 +75,14 @@ reactiveclass Vehicle2(10) {
     msgsrv grant(int value) {
         grant_value = value;
         grant_present = true;
-        if (!grant_pending) {
-            grant_pending = true;
+        if (!grant_react_pending) {
+            grant_react_pending = true;
             self.react_grant() after(0);
         }
     }
 
     msgsrv react_grant() {
-        grant_pending = false;
+        grant_react_pending = false;
         if (grant_present) {
             grant_present = false;
             self.finish() after(5);
@@ -102,19 +94,12 @@ reactiveclass Vehicle2(10) {
     }
 }
 
-reactiveclass RSU(20) {
+reactiveclass RSU(10) {
     knownrebecs {
         Vehicle v1;
         Vehicle2 v2;
     }
     statevars {
-        int assigned;
-        int available_time;
-        int const_wait;
-        int current_time;
-        int _done_1;
-        int _done_2;
-
         int request_1_value;
         int request_2_value;
         int done_1_value;
@@ -125,18 +110,18 @@ reactiveclass RSU(20) {
         boolean done_1_present;
         boolean done_2_present;
 
-        boolean requests_pending;
-        boolean done_pending;
+        boolean request_react_pending;
+        boolean done_react_pending;
+
+        int assigned;
+        int available_time;
+        int const_wait;
+        int current_time;
+        int _done_1;
+        int _done_2;
     }
 
     RSU() {
-        assigned = 0;
-        available_time = 0;
-        const_wait = 1;
-        current_time = 0;
-        _done_1 = 0;
-        _done_2 = 0;
-
         request_1_value = 0;
         request_2_value = 0;
         done_1_value = 0;
@@ -147,15 +132,29 @@ reactiveclass RSU(20) {
         done_1_present = false;
         done_2_present = false;
 
-        requests_pending = false;
-        done_pending = false;
+        request_react_pending = false;
+        done_react_pending = false;
+
+        assigned = 0;
+        available_time = 0;
+        const_wait = 0;
+        current_time = 0;
+        _done_1 = 0;
+        _done_2 = 0;
+
+        self.startup() after(0);
+    }
+
+    msgsrv startup() {
+        const_wait = 1;
+        current_time = 0;
     }
 
     msgsrv request_1(int value) {
         request_1_value = value;
         request_1_present = true;
-        if (!requests_pending) {
-            requests_pending = true;
+        if (!request_react_pending) {
+            request_react_pending = true;
             self.react_requests() after(0);
         }
     }
@@ -163,32 +162,14 @@ reactiveclass RSU(20) {
     msgsrv request_2(int value) {
         request_2_value = value;
         request_2_present = true;
-        if (!requests_pending) {
-            requests_pending = true;
+        if (!request_react_pending) {
+            request_react_pending = true;
             self.react_requests() after(0);
         }
     }
 
-    msgsrv done_1(int value) {
-        done_1_value = value;
-        done_1_present = true;
-        if (!done_pending) {
-            done_pending = true;
-            self.react_done() after(0);
-        }
-    }
-
-    msgsrv done_2(int value) {
-        done_2_value = value;
-        done_2_present = true;
-        if (!done_pending) {
-            done_pending = true;
-            self.react_done() after(0);
-        }
-    }
-
     msgsrv react_requests() {
-        requests_pending = false;
+        request_react_pending = false;
 
         if (current_time > available_time) {
             if (request_1_present) {
@@ -211,8 +192,26 @@ reactiveclass RSU(20) {
         v2.grant(1) after(0);
     }
 
+    msgsrv done_1(int value) {
+        done_1_value = value;
+        done_1_present = true;
+        if (!done_react_pending) {
+            done_react_pending = true;
+            self.react_done() after(0);
+        }
+    }
+
+    msgsrv done_2(int value) {
+        done_2_value = value;
+        done_2_present = true;
+        if (!done_react_pending) {
+            done_react_pending = true;
+            self.react_done() after(0);
+        }
+    }
+
     msgsrv react_done() {
-        done_pending = false;
+        done_react_pending = false;
 
         if (done_1_present) {
             _done_1 = 1;
