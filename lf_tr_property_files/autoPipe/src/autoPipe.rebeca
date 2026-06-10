@@ -1,91 +1,196 @@
-reactiveclass Ping(10) {
+reactiveclass Source(20) {
     knownrebecs {
-        Pong pong;
+        Node1 node1;
     }
+
     statevars {
-        int pingsLeft;
-        int receive_value;
-        boolean receive_present;
-        boolean react_pending;
+        int value;
+        int ticks;
+        int maxTicks;
     }
 
-    Ping() {
-        pingsLeft = 10;
-        receive_value = 0;
-        receive_present = false;
-        react_pending = false;
-        self.serve() after(1);
+    Source() {
+        value = 0;
+        ticks = 0;
+        maxTicks = 5;
+        self.timer_t() after(0);
     }
 
-    msgsrv serve() {
-        pong.receive(pingsLeft) after(0);
-        pingsLeft = pingsLeft - 1;
-    }
+    msgsrv timer_t() {
+        if (ticks < maxTicks) {
+            ticks = ticks + 1;
 
-    msgsrv receive(int value) {
-        receive_value = value;
-        receive_present = true;
-        if (!react_pending) {
-            react_pending = true;
-            self.react_receive() after(0);
+            value = value + 1;
+            node1.receive_in(value) after(0);
+
+            self.action_a() after(1);
+            self.timer_t() after(2);
+        }
+        else {
+            self.timer_t() after(1000);
         }
     }
 
-    msgsrv react_receive() {
-        react_pending = false;
-        if (receive_present) {
-            int value;
-            value = receive_value;
-            receive_present = false;
-            if (pingsLeft > 0) {
-                self.serve() after(1);
-            }
-        }
+    msgsrv action_a() {
+        node1.receive_in(value) after(0);
     }
 }
 
-reactiveclass Pong(10) {
+reactiveclass Node1(20) {
     knownrebecs {
-        Ping ping;
+        Node2 node2;
     }
+
     statevars {
         int count;
-        int expected;
-        int receive_value;
-        boolean receive_present;
-        boolean react_pending;
+        int payload;
     }
 
-    Pong() {
+    Node1() {
         count = 0;
-        expected = 10;
-        receive_value = 0;
-        receive_present = false;
-        react_pending = false;
+        payload = 0;
     }
 
-    msgsrv receive(int value) {
-        receive_value = value;
-        receive_present = true;
-        if (!react_pending) {
-            react_pending = true;
-            self.react_receive() after(0);
-        }
+    msgsrv receive_in(int value) {
+        payload = value;
+        count = count + 1;
+        self.send_output() after(0);
     }
 
-    msgsrv react_receive() {
-        react_pending = false;
-        if (receive_present) {
-            int value;
-            value = receive_value;
-            receive_present = false;
-            count = count + 1;
-            ping.receive(value) after(0);
-        }
+    msgsrv send_output() {
+        node2.receive_in(payload) after(0);
+        count = count - 1;
+    }
+}
+
+reactiveclass Node2(20) {
+    knownrebecs {
+        Node3 node3;
+    }
+
+    statevars {
+        int count;
+        int payload;
+    }
+
+    Node2() {
+        count = 0;
+        payload = 0;
+    }
+
+    msgsrv receive_in(int value) {
+        payload = value;
+        count = count + 1;
+        self.send_output() after(0);
+    }
+
+    msgsrv send_output() {
+        node3.receive_in(payload) after(0);
+        count = count - 1;
+    }
+}
+
+reactiveclass Node3(20) {
+    knownrebecs {
+        Node4 node4;
+    }
+
+    statevars {
+        int count;
+        int payload;
+    }
+
+    Node3() {
+        count = 0;
+        payload = 0;
+    }
+
+    msgsrv receive_in(int value) {
+        payload = value;
+        count = count + 1;
+        self.send_output() after(0);
+    }
+
+    msgsrv send_output() {
+        node4.receive_in(payload) after(0);
+        count = count - 1;
+    }
+}
+
+reactiveclass Node4(20) {
+    knownrebecs {
+        Node5 node5;
+    }
+
+    statevars {
+        int count;
+        int payload;
+    }
+
+    Node4() {
+        count = 0;
+        payload = 0;
+    }
+
+    msgsrv receive_in(int value) {
+        payload = value;
+        count = count + 1;
+        self.send_output() after(0);
+    }
+
+    msgsrv send_output() {
+        node5.receive_in(payload) after(0);
+        count = count - 1;
+    }
+}
+
+reactiveclass Node5(20) {
+    knownrebecs {
+        Sink sink;
+    }
+
+    statevars {
+        int count;
+        int payload;
+    }
+
+    Node5() {
+        count = 0;
+        payload = 0;
+    }
+
+    msgsrv receive_in(int value) {
+        payload = value;
+        count = count + 1;
+        self.send_output() after(0);
+    }
+
+    msgsrv send_output() {
+        sink.receive_in(payload) after(0);
+        count = count - 1;
+    }
+}
+
+reactiveclass Sink(20) {
+    statevars {
+        int received;
+    }
+
+    Sink() {
+        received = 0;
+    }
+
+    msgsrv receive_in(int value) {
+        received = value;
     }
 }
 
 main {
-    Ping ping(pong):();
-    Pong pong(ping):();
+    Source source(node1):();
+    Node1 node1(node2):();
+    Node2 node2(node3):();
+    Node3 node3(node4):();
+    Node4 node4(node5):();
+    Node5 node5(sink):();
+    Sink sink():();
 }
