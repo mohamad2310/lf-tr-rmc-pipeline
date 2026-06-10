@@ -1,0 +1,29 @@
+property {
+    define {
+        source_value_nonnegative = (source.value >= 0);
+        source_ticks_within_bound = (source.ticks <= source.maxTicks);
+
+        node1_count_nonnegative = (node1.count >= 0);
+        node2_count_nonnegative = (node2.count >= 0);
+        node3_count_nonnegative = (node3.count >= 0);
+        node4_count_nonnegative = (node4.count >= 0);
+        node5_count_nonnegative = (node5.count >= 0);
+
+        sink_received_nonnegative = (sink.received >= 0);
+        sink_received_not_above_source = (sink.received <= source.value);
+    }
+
+    Assertion {
+        P1: source_value_nonnegative;
+        P2: source_ticks_within_bound;
+
+        P3: node1_count_nonnegative;
+        P4: node2_count_nonnegative;
+        P5: node3_count_nonnegative;
+        P6: node4_count_nonnegative;
+        P7: node5_count_nonnegative;
+
+        P8: sink_received_nonnegative;
+        P9: sink_received_not_above_source;
+    }
+}
