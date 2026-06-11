@@ -1,0 +1,252 @@
+reactiveclass Vehicle1(10) {
+    knownrebecs {
+        RSU rsu;
+    }
+
+    statevars {
+        int duration_of_use;
+
+        int grant_val;
+        boolean grant_present;
+        boolean react_grant_pending;
+    }
+
+    Vehicle1() {
+        duration_of_use = 1;
+
+        grant_val = 0;
+        grant_present = false;
+        react_grant_pending = false;
+
+        self.startup() after(0);
+    }
+
+    msgsrv startup() {
+        rsu.request_1(1) after(0);
+    }
+
+    msgsrv grant(int value) {
+        grant_val = value;
+        grant_present = true;
+
+        if (!react_grant_pending) {
+            react_grant_pending = true;
+            self.react_grant() after(0);
+        }
+    }
+
+    msgsrv react_grant() {
+        react_grant_pending = false;
+
+        if (grant_present) {
+            grant_present = false;
+            self.finish() after(5);
+        }
+    }
+
+    msgsrv finish() {
+        rsu.done_1(1) after(0);
+    }
+}
+
+reactiveclass Vehicle2(10) {
+    knownrebecs {
+        RSU rsu;
+    }
+
+    statevars {
+        int duration_of_use;
+
+        int grant_val;
+        boolean grant_present;
+        boolean react_grant_pending;
+    }
+
+    Vehicle2() {
+        duration_of_use = 1;
+
+        grant_val = 0;
+        grant_present = false;
+        react_grant_pending = false;
+
+        self.startup() after(0);
+    }
+
+    msgsrv startup() {
+        rsu.request_2(1) after(0);
+    }
+
+    msgsrv grant(int value) {
+        grant_val = value;
+        grant_present = true;
+
+        if (!react_grant_pending) {
+            react_grant_pending = true;
+            self.react_grant() after(0);
+        }
+    }
+
+    msgsrv react_grant() {
+        react_grant_pending = false;
+
+        if (grant_present) {
+            grant_present = false;
+            self.finish() after(5);
+        }
+    }
+
+    msgsrv finish() {
+        rsu.done_2(1) after(0);
+    }
+}
+
+reactiveclass RSU(10) {
+    knownrebecs {
+        Vehicle1 v1;
+        Vehicle2 v2;
+    }
+
+    statevars {
+        int assigned;
+        int available_time;
+        int const_wait;
+        int current_time;
+        int _done_1;
+        int _done_2;
+
+        int request_1_val;
+        int request_2_val;
+        int done_1_val;
+        int done_2_val;
+
+        boolean request_1_present;
+        boolean request_2_present;
+        boolean done_1_present;
+        boolean done_2_present;
+
+        boolean react_requests_pending;
+        boolean react_done_pending;
+
+        int issue_grant_1_value;
+        int issue_grant_2_value;
+    }
+
+    RSU() {
+        assigned = 0;
+        available_time = 0;
+        const_wait = 1;
+        current_time = 0;
+        _done_1 = 0;
+        _done_2 = 0;
+
+        request_1_val = 0;
+        request_2_val = 0;
+        done_1_val = 0;
+        done_2_val = 0;
+
+        request_1_present = false;
+        request_2_present = false;
+        done_1_present = false;
+        done_2_present = false;
+
+        react_requests_pending = false;
+        react_done_pending = false;
+
+        issue_grant_1_value = 0;
+        issue_grant_2_value = 0;
+
+        self.keepalive() after(1000);
+    }
+
+    msgsrv keepalive() {
+        self.keepalive() after(1000);
+    }
+
+    msgsrv request_1(int value) {
+        request_1_val = value;
+        request_1_present = true;
+
+        if (!react_requests_pending) {
+            react_requests_pending = true;
+            self.react_requests() after(0);
+        }
+    }
+
+    msgsrv request_2(int value) {
+        request_2_val = value;
+        request_2_present = true;
+
+        if (!react_requests_pending) {
+            react_requests_pending = true;
+            self.react_requests() after(0);
+        }
+    }
+
+    msgsrv done_1(int value) {
+        done_1_val = value;
+        done_1_present = true;
+
+        if (!react_done_pending) {
+            react_done_pending = true;
+            self.react_done() after(0);
+        }
+    }
+
+    msgsrv done_2(int value) {
+        done_2_val = value;
+        done_2_present = true;
+
+        if (!react_done_pending) {
+            react_done_pending = true;
+            self.react_done() after(0);
+        }
+    }
+
+    msgsrv react_requests() {
+        react_requests_pending = false;
+
+        if (current_time > available_time) {
+            if (request_1_present) {
+                issue_grant_1_value = 1;
+                self.issue_grant_1() after(0);
+            }
+            else {
+                issue_grant_2_value = 1;
+                self.issue_grant_2() after(0);
+            }
+
+            available_time = available_time + current_time + const_wait;
+        }
+
+        request_1_present = false;
+        request_2_present = false;
+    }
+
+    msgsrv issue_grant_1() {
+        v1.grant(issue_grant_1_value) after(0);
+    }
+
+    msgsrv issue_grant_2() {
+        v2.grant(issue_grant_2_value) after(0);
+    }
+
+    msgsrv react_done() {
+        react_done_pending = false;
+
+        if (done_1_present) {
+            _done_1 = 1;
+        }
+        else if (done_2_present) {
+            _done_2 = 1;
+        }
+
+        done_1_present = false;
+        done_2_present = false;
+    }
+}
+
+main {
+    RSU rsu(v1, v2):();
+    Vehicle1 v1(rsu):();
+    Vehicle2 v2(rsu):();
+}
