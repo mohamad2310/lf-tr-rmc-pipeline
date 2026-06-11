@@ -1,0 +1,15 @@
+property {
+    define {
+        v1_duration_constant = (v1.duration_of_use == 1);
+        v2_duration_constant = (v2.duration_of_use == 1);
+        rsu_const_wait_one = (rsu.const_wait == 1);
+        rsu_current_time_zero = (rsu.current_time == 0);
+    }
+
+    Assertion {
+        P1_v1: v1_duration_constant;
+        P1_v2: v2_duration_constant;
+        P2: rsu_const_wait_one;
+        P3: rsu_current_time_zero;
+    }
+}
